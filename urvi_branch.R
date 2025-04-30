@@ -33,7 +33,7 @@ tvTable <- netfilxTidy %>%
 tvTable %>%
   head(20) %>% # can change how many rows are visible
   kbl(caption = "Dataset Sample of TV Shows on Netflix") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 # create subset dataset of movies
 movieTable <- netfilxTidy %>%
@@ -42,7 +42,7 @@ movieTable <- netfilxTidy %>%
 movieTable %>%
   head(20) %>% # can change how many rows are visible
   kbl(caption = "Dataset Sample of Movies on Netflix") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 # creating prelim bar chart visualizations ---------------------------------------------
 
