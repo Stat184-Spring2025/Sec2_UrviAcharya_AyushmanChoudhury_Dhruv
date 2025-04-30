@@ -108,7 +108,5 @@ movieGenrePlot <- ggplot(
 print(movieGenrePlot)
 
 
-#View(netflixTidy)
-#View(tvTable)
-#View(movieTable)
+
 
