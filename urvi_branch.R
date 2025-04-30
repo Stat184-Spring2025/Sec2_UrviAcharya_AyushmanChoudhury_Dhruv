@@ -50,6 +50,7 @@ movieTable %>%
 genreCount <- function(genre_occurence, type) {
   genre_occurence %>%
     separate_rows(genre, sep = ", ") %>%
+    filter(genre != "TV Shows" & genre != "Movies") %>%
     count(genre, name = "count") %>%
     arrange(desc(count)) %>%
     mutate(type = type)
