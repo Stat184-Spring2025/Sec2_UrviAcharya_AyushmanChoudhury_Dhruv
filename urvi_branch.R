@@ -64,7 +64,7 @@ tvGenrePlot <- ggplot(
   aes(
     x = reorder(genre, count),
     y = count,
-    fill = genre
+    fill = genre # bars are filled with color by genre
   )
 ) +
   geom_bar(stat = "identity") +
@@ -90,7 +90,7 @@ movieGenrePlot <- ggplot(
   aes(
     x = reorder(genre, count),
     y = count,
-    fill = genre
+    fill = genre # bars are filled with color by genre
   )
 ) +
   geom_bar(stat = "identity") +
@@ -106,6 +106,7 @@ movieGenrePlot <- ggplot(
   )
 
 print(movieGenrePlot)
+
 
 
 
