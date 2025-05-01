@@ -71,8 +71,9 @@ tvGenrePlot <- ggplot(
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-    legend.position = "none"
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.position = "right"
   ) +
   labs(
     title = "TV Show Genre Popularity on Netflix",
@@ -97,8 +98,9 @@ movieGenrePlot <- ggplot(
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-    legend.position = "none"
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.position = "right"
   ) +
   labs(
     title = "Movie Genre Popularity on Netflix",
@@ -108,8 +110,103 @@ movieGenrePlot <- ggplot(
 
 print(movieGenrePlot)
 
+# -------------------------------------------------------------------------------------
+## genre popularity by country visualizations
+# count the ocurence of each genre for each country for both TV shows and movies
+countGenreForCountry <- function(country_genre_count) {
+  country_genre_count %>%
+    separate_rows(genre, sep = ", ") %>%
+    filter(genre != "TV Shows" & genre != "Movies") %>%
+    group_by(country, genre) %>%
+    count(name = "count") %>%
+    ungroup() %>%
+    arrange(country, desc(count))
+}
 
-#View(netflixTidy)
-#View(tvTable)
-#View(movieTable)
+# counting the genres for each country for tv shows
+countCountryGenreTV <- countGenreForCountry(tvTable)
+
+# select top 5-10 countries to plot so there aren't too many countries
+tvContentTotalByCountry <- tvTable %>%
+  count(country, name = "content_total") %>%
+  arrange(desc(content_total))
+
+topCountries <- tvContentTotalByCountry %>%
+  head(10) %>%
+  pull(country) # getting country names as a vector
+
+# filtering top 5-10 countries for plotting
+topCountryTvGenreCount <- countCountryGenreTV %>%
+  filter(country %in% topCountries)
+
+tvGenreCountryPlot <- ggplot(
+  topCountryTvGenreCount,
+  aes(
+    x = reorder(genre, count),
+    y = count,
+    fill = genre  # bars are filled with color by genre
+  )
+) +
+  geom_bar(stat = "identity") + 
+  facet_wrap(~country, scales = "free_y") + # facet_wrap to separate the countries and 
+  theme_minimal() +                         # what genres are popular in them.
+  theme(
+    axis.text.x = element_blank(), # removed genre names from x-axis because of clutter
+    axis.ticks.x = element_blank(), # no genre names = no x-axis ticks
+    legend.position = "right",      # legend added so that color corresponds to genre
+    strip.text = element_text(size = 9)
+  ) +
+  labs(
+    title = "Genre Popularity of TV Shows by Country on Netflix (Top Ten Countries)",
+    x = "Genre",
+    y = "Number of Titles"
+  )
+
+print(tvGenreCountryPlot)
+
+## create same plot for movies
+
+# counting the genres for each country for tv shows
+countCountryGenreMovie <- countGenreForCountry(movieTable)
+
+# select top 5-10 countries to plot so there aren't too many countries
+movieContentTotalByCountry <- movieTable %>%
+  count(country, name = "content_total") %>%
+  arrange(desc(content_total))
+
+topCountries <- movieContentTotalByCountry %>%
+  head(10) %>%
+  pull(country) # getting country names as a vector
+
+# filtering top 5-10 countries for plotting
+topCountryMovieGenreCount <- countCountryGenreMovie %>%
+  filter(country %in% topCountries)
+
+movieGenreCountryPlot <- ggplot(
+  topCountryMovieGenreCount,
+  aes(
+    x = reorder(genre, count),
+    y = count,
+    fill = genre # bars are filled with color by genre
+  )
+) +
+  geom_bar(stat = "identity") + 
+  facet_wrap(~country, scales = "free_y") + # facet_wrap to separate the countries and 
+  theme_minimal() +                         # what genres are popular in them.
+  theme(
+    axis.text.x = element_blank(), # removed genre names from x-axis because of clutter
+    axis.ticks.x = element_blank(), # no genre names = no x-axis ticks
+    legend.position = "right",      # legend added so that color corresponds to genre
+    strip.text = element_text(size = 9)
+  ) +
+  labs(
+    title = "Genre Popularity of Movies by Country on Netflix (Top Ten Countries)",
+    x = "Genre",
+    y = "Number of Titles"
+  )
+
+print(movieGenreCountryPlot)
+
+
+
 
