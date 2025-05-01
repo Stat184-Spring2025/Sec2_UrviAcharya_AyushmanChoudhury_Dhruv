@@ -17,7 +17,8 @@ disneyTidy <- disneyRaw %>%
     country = `country`
   ) %>%
   select(-show_id, -director, -cast, -description) %>%
-  filter(!is.na(country), country != "")
+  filter(!is.na(country), country != "") %>%
+  separate_rows(country, sep = ", ") # <- split multi-country entries
 
 #--------------------------------------------------------------------------------------
 # 3. Create TV Show and Movie subsets
@@ -89,7 +90,7 @@ tvByCountry <- countGenreByCountry(disneyTV)
 movieByCountry <- countGenreByCountry(disneyMovies)
 
 #--------------------------------------------------------------------------------------
-# 8. Top 10 countries by content count
+# 8. Top 10 countries by content count (after separating countries)
 topTVCountries <- disneyTV %>%
   count(country, name = "total") %>%
   top_n(10, total) %>%
@@ -100,7 +101,7 @@ topMovieCountries <- disneyMovies %>%
   top_n(10, total) %>%
   pull(country)
 
-# Filter top countries
+# Filter to top countries
 tvGenresTop <- tvByCountry %>% filter(country %in% topTVCountries)
 movieGenresTop <- movieByCountry %>% filter(country %in% topMovieCountries)
 
@@ -141,3 +142,4 @@ movieCountryPlot <- ggplot(movieGenresTop, aes(x = reorder(genre, count), y = co
     strip.text = element_text(size = 9)
   )
 print(movieCountryPlot)
+
