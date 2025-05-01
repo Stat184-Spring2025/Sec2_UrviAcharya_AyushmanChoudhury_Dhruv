@@ -70,8 +70,9 @@ tvGenrePlot <- ggplot(
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-    legend.position = "none"
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.position = "right"
   ) +
   labs(
     title = "TV Show Genre Popularity on Netflix",
@@ -96,8 +97,9 @@ movieGenrePlot <- ggplot(
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-    legend.position = "none"
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.position = "right"
   ) +
   labs(
     title = "Movie Genre Popularity on Netflix",
