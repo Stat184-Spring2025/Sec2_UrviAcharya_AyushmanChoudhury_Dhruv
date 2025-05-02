@@ -24,6 +24,16 @@ netflixTidy <- netflixRaw %>%
 # remove null values
 netflixTidy <- netflixTidy %>%
   filter(country != "")
+
+# -------------------------------------------------------------------------------------
+# creating CSV file of netflixTidy
+
+write.csv(
+  netfilxTidy,
+  file = "~/Desktop/184_group_project/netflix_tidied.csv",
+  row.names = FALSE
+)
+
 # -------------------------------------------------------------------------------------
 ## creating subset dataframes for movies and tv shows
 # create subset dataset of tv shows
