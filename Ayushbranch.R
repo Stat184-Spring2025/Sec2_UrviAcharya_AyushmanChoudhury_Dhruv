@@ -143,3 +143,31 @@ movieCountryPlot <- ggplot(movieGenresTop, aes(x = reorder(genre, count), y = co
   )
 print(movieCountryPlot)
 
+
+#--------------------------------------------------------------------------------------
+# 11. Combine both Tidied Datasets
+# Load required packages
+library(readr)
+library(dplyr)
+
+# Read the CSVs from Downloads folder
+disney <- read_csv("~/Downloads/disney_tidy.csv")
+netflix <- read_csv("~/Downloads/netflix_tidied.csv")
+
+# Ensure `date_added` is the same type (convert to character)
+disney <- disney %>% mutate(
+  date_added = as.character(date_added),
+  platform = "Disney+"
+)
+
+netflix <- netflix %>% mutate(
+  date_added = as.character(date_added),
+  platform = "Netflix"
+)
+
+# Combine datasets
+combined <- bind_rows(disney, netflix)
+
+# Save the combined dataset
+write_csv(combined, "~/Downloads/combined_streaming_data.csv")
+
