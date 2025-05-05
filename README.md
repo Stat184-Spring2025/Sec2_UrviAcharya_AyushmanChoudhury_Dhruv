@@ -30,7 +30,7 @@ We acknowledge the contributors of these public datasets. Some elements of the d
 
 ## Authors
 
-- **Dhruv Nasit**
+- **Dhruv Nasit** (drn5166@psu.edu)
 - **Urvi Acharya**
 - **Ayushman Choudhury**
 
