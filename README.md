@@ -32,6 +32,6 @@ We acknowledge the contributors of these public datasets. Some elements of the d
 
 - **Dhruv Nasit** (drn5166@psu.edu)
 - **Urvi Acharya**
-- **Ayushman Choudhury**
+- **Ayushman Choudhury** (amc8837@psu.edu)
 
 If you have any questions or suggestions, feel free to reach out via GitHub or email any of the team members.
