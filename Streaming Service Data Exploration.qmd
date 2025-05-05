@@ -1,0 +1,66 @@
+---
+title: "Streaming Service Data Exploration"
+author: 
+  - Dhruv Nasit
+  - Urvi
+  - Ayush
+date: "May 5, 2025"
+date-modified: now
+format: pdf
+execute: 
+  echo: false
+  warning: false
+---
+
+## Disney+ Dataset
+
+The Disney+ dataset, sourced from Kaggle, contains metadata about movies and TV shows available on the Disney+ streaming platform. It includes information such as title, release year, genre, content rating, runtime, and a brief description. This dataset is useful for analyzing trends in Disney+ content, such as the distribution of genres, the age of titles, and duration patterns. [Link](https://www.kaggle.com/datasets/shivamb/disney-movies-and-tv-shows)
+
+## Netflix Dataset
+
+The Netflix dataset, also sourced from Kaggle, includes detailed metadata for movies and TV shows available on Netflix. It provides fields such as title, release year, genre, type (movie or TV show), content rating, and runtime. This dataset enables exploration of content trends on Netflix, such as genre dominance, recent content releases, and runtime comparisons. [Link](https://www.kaggle.com/datasets/shivamb/netflix-shows)
+
+## Data Provenance
+
+The data used in this project was collected and published by Shivam Bansal on Kaggle. It consists of two separate datasets: one for Disney+ and one for Netflix. These datasets were compiled to provide an overview of the content libraries on the respective streaming platforms. Each row in the datasets represents a unique title—either a movie or a TV show—and includes information such as release year, genre, content rating, and runtime. The purpose of the data is to enable analysis of content trends across platforms, supporting comparisons related to genre distribution, content length, and date of releases.
+
+## FAIR and CARE Principles
+
+The datasets used in this project align well with the **FAIR** (Findable, Accessible, Interoperable, and Reusable) principles:
+
+-   **Findable:** The datasets are publicly available on Kaggle, a well-known data repository, with unique and persistent URLs.
+-   **Accessible:** The data can be downloaded freely by anyone with a Kaggle account, without pay-walls or restrictions.
+-   **Interoperable:** The data is provided in standard CSV format, making it easy to use across various programming languages and tools such as R and Python.
+-   **Reusable:** The datasets include clear documentation and metadata, allowing users to understand and re-purpose the data for similar exploratory or comparative analyses.
+
+The data also aligns with the spirit of the **CARE** principles (Collective Benefit, Authority to Control, Responsibility, and Ethics), though not directly applicable in full since this data does not pertain to Indigenous communities. However:
+
+-   **Collective Benefit:** The datasets contribute to public knowledge about streaming trends and allow educational use.
+-   **Responsibility and Ethics:** The use of the data is ethical, as it is anonymized and focuses on publicly available media titles rather than individuals.
+
+Overall, the data supports transparent, responsible, and collaborative academic research.
+
+## Research Questions
+
+1.  Which platform releases the newest content (highest % of titles from recent years)?
+2.  Which genres dominate each platform? (E.g., Disney+ = Animation/Kids, Netflix = Drama/Thriller?)
+3.  Are Disney+ movies shorter or longer compared to Netflix movies?
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed). \## Citations
+
+Bansal, S. (2021). *Netflix Movies and TV Shows* \[Data set\]. Kaggle. https://www.kaggle.com/datasets/shivamb/netflix-shows
+
+Bansal, S. (2021). *Disney+ Movies and TV Shows* \[Data set\]. Kaggle. https://www.kaggle.com/datasets/shivamb/disney-movies-and-tv-shows
