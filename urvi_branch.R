@@ -265,7 +265,7 @@ repeatedTitles %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 #---------------------------------------------------------------------------
-# answering research question: Are Disney+ movies shorter or longer compared to Netflix
+# answering research question: Are Disney+ movies shorter or longer compared to Netflix?
 
 # filter the combined data set to only include the rows that are movies
 moviesOnly <- disneyNetflixdata %>%
