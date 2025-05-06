@@ -37,7 +37,7 @@ write.csv(
 # -------------------------------------------------------------------------------------
 ## creating subset dataframes for movies and tv shows
 # create subset dataset of tv shows
-tvTable <- netfilxTidy %>%
+tvTable <- netflixTidy %>%
   filter(type == "TV Show")
 # visualize subset  
 tvTable %>%
@@ -46,7 +46,7 @@ tvTable %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 # create subset dataset of movies
-movieTable <- netfilxTidy %>%
+movieTable <- netflixTidy %>%
   filter(type == "Movie")
 # visualize subset
 movieTable %>%
