@@ -264,6 +264,38 @@ repeatedTitles %>%
   kbl(caption = "Titles Found Both on Netflix and Disney Plus (Top 20)") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
+#---------------------------------------------------------------------------
+# answering research question: Are Disney+ movies shorter or longer compared to Netflix
+
+# filter the combined data set to only include the rows that are movies
+moviesOnly <- disneyNetflixdata %>%
+  filter(type == "Movie")
+
+# movie_duration_mins is a new column that is created by getting the duration,
+# from the duration columns
+# "min" is re moved from the text and the duration is turned into a numeric
+moviesOnly <- moviesOnly %>%
+  mutate(movie_duration_mins = as.numeric(str_replace(duration, " min", "")))
+
+# box-plot created to compare movie duration of Netflix and Disney+
+ggplot(
+  filteredMovies,
+  aes(
+    x = platform,            # platform on the x-axis
+    y = movie_duration_mins, # movie duration on y-axis
+    fill = platform          # color filled based on platform
+  )
+) +
+  geom_boxplot() + # box-plot layer added
+  # colors manually set for Disney+ and Netflix
+  scale_fill_manual(values = c("Disney+" = "royalblue", "Netflix" = "brown1")) +
+  labs(
+    title = "Movie Duration on Each Platform",
+    x = "Platform",
+    y = "Duration in Minutes"
+  ) +
+  theme_minimal()
+
 
 
 
