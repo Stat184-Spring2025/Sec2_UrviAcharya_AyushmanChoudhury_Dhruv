@@ -74,16 +74,14 @@ tvGenrePlot <- ggplot(
   tvGenre,
   aes(
     x = reorder(genre, count),
-    y = count,
-    fill = genre
+    y = count
   )
 ) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "darkred") +
   theme_minimal() +
   theme(
-    axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    legend.position = "right"
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    legend.position = "none"
   ) +
   labs(
     title = "TV Show Genre Popularity on Netflix",
@@ -93,6 +91,11 @@ tvGenrePlot <- ggplot(
 
 print(tvGenrePlot)
 
+# tv show genre ocurrence table
+tvGenre %>%
+  kbl(caption = "Genre Count for Netflix TV Shows") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
+
 # count movie genres
 movieGenre <- genreCount(movieTable, "Movie")
 
@@ -101,16 +104,14 @@ movieGenrePlot <- ggplot(
   movieGenre,
   aes(
     x = reorder(genre, count),
-    y = count,
-    fill = genre
+    y = count
   )
 ) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "darkorange") +
   theme_minimal() +
   theme(
-    axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    legend.position = "right"
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    legend.position = "none"
   ) +
   labs(
     title = "Movie Genre Popularity on Netflix",
@@ -119,6 +120,11 @@ movieGenrePlot <- ggplot(
   )
 
 print(movieGenrePlot)
+
+# movie genre occurrence table
+movieGenre %>%
+  kbl(caption = "Genre Count for Netflix Movies") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 # -------------------------------------------------------------------------------------
 ## genre popularity by country visualizations
@@ -216,6 +222,30 @@ movieGenreCountryPlot <- ggplot(
   )
 
 print(movieGenreCountryPlot)
+
+#---------------------------------------------------------------------------
+# counting the overlap of titles between Netflix and Disney Plus from joined table
+
+# reading combined data file
+disneyNetflixdata <- read.csv(
+  file = "~/Desktop/184_group_project/combined_streaming_data.csv"
+)
+
+# counting instances of repeated titles
+repeatedTitles <- disneyNetflixdata %>%
+  group_by(title) %>%
+  summarise(
+    count = n(),
+    title_type = paste(unique(type), collapse = ", "),
+    country_count = paste(unique(country), collapse = ", ") 
+  ) %>%
+  arrange(desc(count))
+
+# visualizing in table form
+repeatedTitles %>%
+  head(20)%>%
+  kbl(caption = "Titles Found Both on Netflix and Disney Plus (Top 20)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 
 
