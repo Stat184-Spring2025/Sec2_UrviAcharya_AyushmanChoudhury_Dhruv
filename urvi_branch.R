@@ -237,7 +237,7 @@ repeatedTitles <- disneyNetflixdata %>%
   summarise(
     count = n(),
     title_type = paste(unique(type), collapse = ", "),
-    country_count = paste(unique(country), collapse = ", ") 
+    countries = paste(unique(country), collapse = ", ") 
   ) %>%
   arrange(desc(count))
 
