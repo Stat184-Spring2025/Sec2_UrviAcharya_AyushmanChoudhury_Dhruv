@@ -225,6 +225,8 @@ print(movieGenreCountryPlot)
 
 #---------------------------------------------------------------------------
 # counting the overlap of titles between Netflix and Disney Plus from joined table
+# there will be more than two instances of the same title due to it appearing in,
+# more than one country
 
 # reading combined data file
 disneyNetflixdata <- read.csv(
