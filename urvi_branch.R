@@ -37,22 +37,37 @@ write.csv(
 # -------------------------------------------------------------------------------------
 ## creating subset dataframes for movies and tv shows
 # create subset dataset of tv shows
-tvTable <- netflixTidy %>%
+netflixTvTable <- netflixTidy %>%
   filter(type == "TV Show")
 # visualize subset  
-tvTable %>%
+netflixTvTable %>%
   head(20) %>% # can change how many rows are visible
   kbl(caption = "Dataset Sample of TV Shows on Netflix") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 
 # create subset dataset of movies
-movieTable <- netflixTidy %>%
+netflixMovieTable <- netflixTidy %>%
   filter(type == "Movie")
 # visualize subset
-movieTable %>%
+netflixMovieTable %>%
   head(20) %>% # can change how many rows are visible
   kbl(caption = "Dataset Sample of Movies on Netflix") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+
+# -------------------------------------------------------------------------------------
+## creating CSV files for netflixTVTable and netflixMovieTable
+
+write.csv(
+  netflixTvTable,
+  file = "~/Desktop/184_group_project/netflix_tv_shows.csv",
+  row.names = FALSE
+)
+
+write.csv(
+  netflixMovieTable,
+  file = "~/Desktop/184_group_project/netflix_movies.csv",
+  row.names = FALSE
+)
 
 # creating prelim bar chart visualizations ---------------------------------------------
 
