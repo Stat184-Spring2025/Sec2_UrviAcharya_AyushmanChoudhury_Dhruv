@@ -278,27 +278,5 @@ ggplot(
   ) +
   theme_minimal()
 
-#-----------------------------------------------------------------------------------------------------
-## creating CSV file of netflixTidy
 
-write.csv(
-  netflixTidy,
-  file = "~/Desktop/184_group_project/netflix_tidied.csv",
-  row.names = FALSE
-)
-
-#-----------------------------------------------------------------------------------------------------
-## creating CSV files for netflixTVTable and netflixMovieTable
-
-write.csv(
-  netflixTvTable,
-  file = "~/Desktop/184_group_project/netflix_tv_shows.csv",
-  row.names = FALSE
-)
-
-write.csv(
-  netflixMovieTable,
-  file = "~/Desktop/184_group_project/netflix_movies.csv",
-  row.names = FALSE
-)
 
