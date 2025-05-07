@@ -86,9 +86,9 @@ tvGenrePlot <- ggplot(
 print(tvGenrePlot)
 
 # tv show genre occurrences table
-tvGenre %>%
-  kbl(caption = "Genre Count for Netflix TV Shows") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
+#tvGenre %>%
+  #kbl(caption = "Genre Count for Netflix TV Shows") %>%
+  #kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 
 # count movie genres
@@ -117,9 +117,9 @@ movieGenrePlot <- ggplot(
 print(movieGenrePlot)
 
 # movie genre occurrence table
-movieGenre %>%
-  kbl(caption = "Genre Count for Netflix Movies") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
+#movieGenre %>%
+  #kbl(caption = "Genre Count for Netflix Movies") %>%
+  #kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 #-----------------------------------------------------------------------------------------------------
 ## Counting the overlap of titles between Netflix and Disney+ from joined table
