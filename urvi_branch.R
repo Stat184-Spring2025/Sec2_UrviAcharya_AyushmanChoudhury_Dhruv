@@ -32,19 +32,19 @@ netflixTidy <- netflixTidy %>%
 netflixTvTable <- netflixTidy %>%
   filter(type == "TV Show")
 # visualize subset  
-netflixTvTable %>%
-  head(20) %>% # can change how many rows are visible
-  kbl(caption = "Dataset Sample of TV Shows on Netflix") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+#netflixTvTable %>%
+  #head(20) %>% # can change how many rows are visible
+  #kbl(caption = "Dataset Sample of TV Shows on Netflix") %>%
+  #kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 
 # create subset dataset of movies
 netflixMovieTable <- netflixTidy %>%
   filter(type == "Movie")
 # visualize subset
-netflixMovieTable %>%
-  head(20) %>% # can change how many rows are visible
-  kbl(caption = "Dataset Sample of Movies on Netflix") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+#netflixMovieTable %>%
+  #head(20) %>% # can change how many rows are visible
+  #kbl(caption = "Dataset Sample of Movies on Netflix") %>%
+  #kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 
 #-----------------------------------------------------------------------------------------------------
 ## Visualizing the popularity of genres across movies and tv shows
@@ -61,7 +61,7 @@ genreCount <- function(genre_occurence, type) {
 }
 
 # count tv show genres
-tvGenre <- genreCount(tvTable, "TV Show")
+tvGenre <- genreCount(netflixTvTable, "TV Show")
 
 # creating plot for tv genre
 tvGenrePlot <- ggplot(
@@ -92,7 +92,7 @@ tvGenre %>%
 
 
 # count movie genres
-movieGenre <- genreCount(movieTable, "Movie")
+movieGenre <- genreCount(netflixMovieTable, "Movie")
 
 # creating plot for movies
 movieGenrePlot <- ggplot(
