@@ -148,6 +148,7 @@ repeatedTitles %>%
   kbl(caption = "Titles Found Both on Netflix and Disney Plus (Top 20)") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE) %>%
   column_spec(4, width = "200px", extra_css = "word-wrap: break-word; white-space: normal;")
+  # reduced column length for final qmd file
 
 #-----------------------------------------------------------------------------------------------------
 # answering research question: Are Disney+ movies shorter or longer compared to Netflix?
