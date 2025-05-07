@@ -3,6 +3,8 @@ library(readxl)
 library(tidyverse)
 library(kableExtra)
 library(ggplot2)
+library(readr)
+library(dplyr)
 
 #--------------------------------------------------------------------------------------
 # 1. Load the Disney+ Excel file
@@ -18,7 +20,7 @@ disneyTidy <- disneyRaw %>%
   ) %>%
   select(-show_id, -director, -cast, -description) %>%
   filter(!is.na(country), country != "") %>%
-  separate_rows(country, sep = ", ") # <- split multi-country entries
+  separate_rows(country, sep = ", ")
 
 #--------------------------------------------------------------------------------------
 # 3. Create TV Show and Movie subsets
@@ -41,120 +43,43 @@ tvGenres <- genreCount(disneyTV, "TV Show")
 movieGenres <- genreCount(disneyMovies, "Movie")
 
 #--------------------------------------------------------------------------------------
-# 5. Plot TV Show genres
-tvPlot <- ggplot(tvGenres, aes(x = reorder(genre, count), y = count, fill = genre)) +
-  geom_bar(stat = "identity") +
+# 5. Plot TV Show genres (dark red with genre labels)
+tvPlot <- ggplot(tvGenres, aes(x = reorder(genre, count), y = count)) +
+  geom_bar(stat = "identity", fill = "darkred") + # darkred makes all the bars the same color
   theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    legend.position = "none"
+  ) +
   labs(
-    title = "Disney+ TV Show Genre Popularity",
+    title = "TV Show Genre Popularity on Disney+",
     x = "Genre",
     y = "Number of Titles"
-  ) +
-  theme(
-    axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    legend.position = "right"
   )
 print(tvPlot)
 
 #--------------------------------------------------------------------------------------
-# 6. Plot Movie genres
-moviePlot <- ggplot(movieGenres, aes(x = reorder(genre, count), y = count, fill = genre)) +
-  geom_bar(stat = "identity") +
+# 6. Plot Movie genres (dark orange with genre labels)
+moviePlot <- ggplot(movieGenres, aes(x = reorder(genre, count), y = count)) +
+  geom_bar(stat = "identity", fill = "darkorange") + # darkorange makes all the bars the same color
   theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    legend.position = "none"
+  ) +
   labs(
-    title = "Disney+ Movie Genre Popularity",
+    title = "Movie Genre Popularity on Disney+",
     x = "Genre",
     y = "Number of Titles"
-  ) +
-  theme(
-    axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    legend.position = "right"
   )
 print(moviePlot)
 
 #--------------------------------------------------------------------------------------
-# 7. Function to count genres by country
-countGenreByCountry <- function(df) {
-  df %>%
-    separate_rows(genre, sep = ", ") %>%
-    group_by(country, genre) %>%
-    count(name = "count") %>%
-    ungroup() %>%
-    arrange(country, desc(count))
-}
-
-# Count genres by country for TV and Movies
-tvByCountry <- countGenreByCountry(disneyTV)
-movieByCountry <- countGenreByCountry(disneyMovies)
-
-#--------------------------------------------------------------------------------------
-# 8. Top 10 countries by content count (after separating countries)
-topTVCountries <- disneyTV %>%
-  count(country, name = "total") %>%
-  top_n(10, total) %>%
-  pull(country)
-
-topMovieCountries <- disneyMovies %>%
-  count(country, name = "total") %>%
-  top_n(10, total) %>%
-  pull(country)
-
-# Filter to top countries
-tvGenresTop <- tvByCountry %>% filter(country %in% topTVCountries)
-movieGenresTop <- movieByCountry %>% filter(country %in% topMovieCountries)
-
-#--------------------------------------------------------------------------------------
-# 9. Plot TV genres by country
-tvCountryPlot <- ggplot(tvGenresTop, aes(x = reorder(genre, count), y = count, fill = genre)) +
-  geom_bar(stat = "identity") +
-  facet_wrap(~country, scales = "free_y") +
-  theme_minimal() +
-  labs(
-    title = "Disney+ TV Genres by Country (Top 10)",
-    x = "Genre",
-    y = "Number of Titles"
-  ) +
-  theme(
-    axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    legend.position = "right",
-    strip.text = element_text(size = 9)
-  )
-print(tvCountryPlot)
-
-#--------------------------------------------------------------------------------------
-# 10. Plot Movie genres by country
-movieCountryPlot <- ggplot(movieGenresTop, aes(x = reorder(genre, count), y = count, fill = genre)) +
-  geom_bar(stat = "identity") +
-  facet_wrap(~country, scales = "free_y") +
-  theme_minimal() +
-  labs(
-    title = "Disney+ Movie Genres by Country (Top 10)",
-    x = "Genre",
-    y = "Number of Titles"
-  ) +
-  theme(
-    axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    legend.position = "right",
-    strip.text = element_text(size = 9)
-  )
-print(movieCountryPlot)
-
-
-#--------------------------------------------------------------------------------------
-# 11. Combine both Tidied Datasets
-# Load required packages
-library(readr)
-library(dplyr)
-
-# Read the CSVs from Downloads folder
+# 7. Combine both Tidied Datasets
 disney <- read_csv("~/Downloads/disney_tidy.csv")
 netflix <- read_csv("~/Downloads/netflix_tidied.csv")
 
-# Ensure `date_added` is the same type (convert to character)
+# Standardize date format and add platform label
 disney <- disney %>% mutate(
   date_added = as.character(date_added),
   platform = "Disney+"
@@ -165,9 +90,7 @@ netflix <- netflix %>% mutate(
   platform = "Netflix"
 )
 
-# Combine datasets
+# Combine and save
 combined <- bind_rows(disney, netflix)
-
-# Save the combined dataset
 write_csv(combined, "~/Downloads/combined_streaming_data.csv")
 
