@@ -1,4 +1,4 @@
-# Load packages 
+# Load necessary packages 
 library(tidyverse)
 library(dplyr)
 library(knitr)
@@ -26,16 +26,8 @@ netflixTidy <- netflixTidy %>%
   filter(country != "")
 
 # -------------------------------------------------------------------------------------
-# creating CSV file of netflixTidy
-
-write.csv(
-  netfilxTidy,
-  file = "~/Desktop/184_group_project/netflix_tidied.csv",
-  row.names = FALSE
-)
-
-# -------------------------------------------------------------------------------------
 ## creating subset dataframes for movies and tv shows
+
 # create subset dataset of tv shows
 netflixTvTable <- netflixTidy %>%
   filter(type == "TV Show")
@@ -55,29 +47,16 @@ netflixMovieTable %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 
 # -------------------------------------------------------------------------------------
-## creating CSV files for netflixTVTable and netflixMovieTable
+## Visualizing the popularity of genres across movies and tv shows
+## Separate bar charts for movies and tv shows
 
-write.csv(
-  netflixTvTable,
-  file = "~/Desktop/184_group_project/netflix_tv_shows.csv",
-  row.names = FALSE
-)
-
-write.csv(
-  netflixMovieTable,
-  file = "~/Desktop/184_group_project/netflix_movies.csv",
-  row.names = FALSE
-)
-
-# creating prelim bar chart visualizations ---------------------------------------------
-
-# function counts the ocurrences of each genre
+# function counts the occurrences of each genre
 genreCount <- function(genre_occurence, type) {
   genre_occurence %>%
     separate_rows(genre, sep = ", ") %>%
     filter(genre != "TV Shows" & genre != "Movies") %>%
     count(genre, name = "count") %>%
-    arrange(desc(count)) %>%
+    arrange(desc(count)) %>% # arranged in descending order
     mutate(type = type)
 }
 
@@ -92,11 +71,11 @@ tvGenrePlot <- ggplot(
     y = count
   )
 ) +
-  geom_bar(stat = "identity", fill = "darkred") +
+  geom_bar(stat = "identity", fill = "darkred") + # darkred makes all the bars the same color
   theme_minimal() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-    legend.position = "none"
+    legend.position = "none" # legend removed since all the bars are the same color
   ) +
   labs(
     title = "TV Show Genre Popularity on Netflix",
@@ -106,7 +85,7 @@ tvGenrePlot <- ggplot(
 
 print(tvGenrePlot)
 
-# tv show genre ocurrence table
+# tv show genre occurrences table
 tvGenre %>%
   kbl(caption = "Genre Count for Netflix TV Shows") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
@@ -123,11 +102,11 @@ movieGenrePlot <- ggplot(
     y = count
   )
 ) +
-  geom_bar(stat = "identity", fill = "darkorange") +
+  geom_bar(stat = "identity", fill = "darkorange") + # darkorange makes all the bars the same color
   theme_minimal() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-    legend.position = "none"
+    legend.position = "none" # legend removed since all the bars are the same color
   ) +
   labs(
     title = "Movie Genre Popularity on Netflix",
@@ -143,7 +122,9 @@ movieGenre %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
 #---------------------------------------------------------------------------
-# count the ocurence of each genre for each country for both TV shows and movies
+## Visualizing the most popular genres of tv shows and movies in different countries
+
+# count the occurrence of each genre for each country for both TV shows and movies
 countGenreForCountry <- function(country_genre_count) {
   country_genre_count %>%
     separate_rows(genre, sep = ", ") %>%
@@ -151,7 +132,7 @@ countGenreForCountry <- function(country_genre_count) {
     group_by(country, genre) %>%
     count(name = "count") %>%
     ungroup() %>%
-    arrange(country, desc(count))
+    arrange(country, desc(count)) # arranged in descending order
 }
 
 # counting the genres for each country for tv shows
@@ -160,7 +141,7 @@ countCountryGenreTV <- countGenreForCountry(tvTable)
 # select top 5-10 countries to plot so there aren't too many countries
 tvContentTotalByCountry <- tvTable %>%
   count(country, name = "content_total") %>%
-  arrange(desc(content_total))
+  arrange(desc(content_total)) # arranged in descending order
 
 topCountries <- tvContentTotalByCountry %>%
   head(10) %>%
@@ -203,7 +184,7 @@ countCountryGenreMovie <- countGenreForCountry(movieTable)
 # select top 5-10 countries to plot so there aren't too many countries
 movieContentTotalByCountry <- movieTable %>%
   count(country, name = "content_total") %>%
-  arrange(desc(content_total))
+  arrange(desc(content_total)) # arranged in descending order
 
 topCountries <- movieContentTotalByCountry %>%
   head(10) %>%
@@ -239,9 +220,9 @@ movieGenreCountryPlot <- ggplot(
 print(movieGenreCountryPlot)
 
 #---------------------------------------------------------------------------
-# counting the overlap of titles between Netflix and Disney Plus from joined table
-# there will be more than two instances of the same title due to it appearing in,
-# more than one country
+## Counting the overlap of titles between Netflix and Disney+ from joined table
+## There will be more than two instances of the same title due to it appearing in,
+## more than one country
 
 # reading combined data file
 disneyNetflixdata <- read.csv(
@@ -250,13 +231,13 @@ disneyNetflixdata <- read.csv(
 
 # counting instances of repeated titles
 repeatedTitles <- disneyNetflixdata %>%
-  group_by(title) %>%
+  group_by(title) %>%  # grouping by movie and tv show title 
   summarise(
-    count = n(),
-    title_type = paste(unique(type), collapse = ", "),
-    countries = paste(unique(country), collapse = ", ") 
+    count = n(), # count the occurrences of each title in disneyNetflixdata
+    title_type = paste(unique(type), collapse = ", "), #title type and title turned into one string
+    countries = paste(unique(country), collapse = ", ")# country and title turned into one string
   ) %>%
-  arrange(desc(count))
+  arrange(desc(count)) # arranged in descending order
 
 # visualizing in table form
 repeatedTitles %>%
@@ -296,8 +277,26 @@ ggplot(
   ) +
   theme_minimal()
 
+# -------------------------------------------------------------------------------------
+# creating CSV file of netflixTidy
 
+write.csv(
+  netflixTidy,
+  file = "~/Desktop/184_group_project/netflix_tidied.csv",
+  row.names = FALSE
+)
 
+# -------------------------------------------------------------------------------------
+## creating CSV files for netflixTVTable and netflixMovieTable
 
+write.csv(
+  netflixTvTable,
+  file = "~/Desktop/184_group_project/netflix_tv_shows.csv",
+  row.names = FALSE
+)
 
-
+write.csv(
+  netflixMovieTable,
+  file = "~/Desktop/184_group_project/netflix_movies.csv",
+  row.names = FALSE
+)
