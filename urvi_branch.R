@@ -162,8 +162,8 @@ moviesOnly <- moviesOnly %>%
   mutate(movie_duration_mins = as.numeric(str_replace(duration, " min", "")))
 
 # box-plot created to compare movie duration of Netflix and Disney+
-ggplot(
-  filteredMovies,
+moviesOnlyPlot <- ggplot(
+  moviesOnly,
   aes(
     x = platform,            # platform on the x-axis
     y = movie_duration_mins, # movie duration on y-axis
@@ -179,6 +179,8 @@ ggplot(
     y = "Duration in Minutes"
   ) +
   theme_minimal()
+
+print(moviesOnlyPlot)
 
 
 
