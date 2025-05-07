@@ -4,12 +4,12 @@ library(dplyr)
 library(knitr)
 library(kableExtra)
 library(ggplot2)
-#--------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 # import data
 netflixRaw <- read.csv(
   file = "~/Desktop/184_group_project/netflix_titles.csv"
 )
-# -------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 ## Tidying data
 # remove and rename columns as needed
 netflixTidy <- netflixRaw %>%
@@ -25,7 +25,7 @@ netflixTidy <- netflixRaw %>%
 netflixTidy <- netflixTidy %>%
   filter(country != "")
 
-# -------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 ## creating subset dataframes for movies and tv shows
 
 # create subset dataset of tv shows
@@ -46,7 +46,7 @@ netflixMovieTable %>%
   kbl(caption = "Dataset Sample of Movies on Netflix") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 
-# -------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 ## Visualizing the popularity of genres across movies and tv shows
 ## Separate bar charts for movies and tv shows
 
@@ -121,7 +121,7 @@ movieGenre %>%
   kbl(caption = "Genre Count for Netflix Movies") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
-#---------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 ## Visualizing the most popular genres of tv shows and movies in different countries
 
 # count the occurrence of each genre for each country for both TV shows and movies
@@ -219,15 +219,16 @@ movieGenreCountryPlot <- ggplot(
 
 print(movieGenreCountryPlot)
 
-#---------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 ## Counting the overlap of titles between Netflix and Disney+ from joined table
 ## There will be more than two instances of the same title due to it appearing in,
 ## more than one country
 
-# reading combined data file
+# import combined data file
 disneyNetflixdata <- read.csv(
   file = "~/Desktop/184_group_project/combined_streaming_data.csv"
 )
+#-----------------------------------------------------------------------------------------------------
 
 # counting instances of repeated titles
 repeatedTitles <- disneyNetflixdata %>%
@@ -245,7 +246,7 @@ repeatedTitles %>%
   kbl(caption = "Titles Found Both on Netflix and Disney Plus (Top 20)") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = FALSE)
 
-#---------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 # answering research question: Are Disney+ movies shorter or longer compared to Netflix?
 
 # filter the combined data set to only include the rows that are movies
@@ -277,8 +278,8 @@ ggplot(
   ) +
   theme_minimal()
 
-# -------------------------------------------------------------------------------------
-# creating CSV file of netflixTidy
+#-----------------------------------------------------------------------------------------------------
+## creating CSV file of netflixTidy
 
 write.csv(
   netflixTidy,
@@ -286,7 +287,7 @@ write.csv(
   row.names = FALSE
 )
 
-# -------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------
 ## creating CSV files for netflixTVTable and netflixMovieTable
 
 write.csv(
@@ -300,3 +301,4 @@ write.csv(
   file = "~/Desktop/184_group_project/netflix_movies.csv",
   row.names = FALSE
 )
+
